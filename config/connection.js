@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/social-network';
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network', {
+    await mongoose.connect(dbURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
     });
     console.log('Connected to MongoDB');
   } catch (err) {
@@ -15,4 +15,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+module.exports = { connectDB, dbURI };

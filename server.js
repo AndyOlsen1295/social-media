@@ -1,7 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const { port, dbURI } = require('./config/connection');
+const { port } = require('./config/connection');
 const apiRoutes = require('./routes/api');
+const { connectDB } = require('./config/connection');
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 // Connect to MongoDB database
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+connectDB()
   .then(() => {
-    console.log(`Connected to MongoDB at ${5000}`);
+    console.log(`Connected to MongoDB at ${process.env.MONGODB_URI || 'mongodb://localhost/social-network'}`);
     
     // Start server once connected to database
     app.listen(port, () => {
@@ -22,3 +22,4 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     });
   })
   .catch((err) => console.error(err));
+
