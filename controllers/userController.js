@@ -2,16 +2,20 @@ const { User } = require('../models');
 
 const userController = {
   // Create a new user
-  async createUser(req, res) {
-    try {
-      const { username, email } = req.body;
-      const user = await User.create({ username, email });
-      return res.json(user);
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Server error' });
+ async createUser(req, res) {
+  try {
+    const { username, email } = req.body;
+    if (!username || !email) {
+      return res.status(400).json({ error: 'Username and email are required' });
     }
-  },
+    const user = await User.create({ username, email });
+    return res.json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+},
+
 
   // Get all users
   async getAllUsers(req, res) {
@@ -39,7 +43,7 @@ const userController = {
   },
 
   // Update a user by ID
-  async updateUserById(req, res) {
+  async updateUser(req, res) {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {

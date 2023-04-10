@@ -2,7 +2,7 @@ const { Thought } = require('../models');
 
 const thoughtController = {
   // Create a new thought
-  async createThought(req, res) {
+  async createThoughtById(req, res) {
     try {
       const { username, thoughtText } = req.body;
       const thought = await Thought.create({ username, thoughtText });

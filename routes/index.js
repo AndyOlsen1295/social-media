@@ -1,9 +1,18 @@
 const express = require('express');
-const connectDB = require('./config/connection');
+const thoughtsRoutes = require('./thoughts');
+const reactionsRoutes = require('./reactions');
+const userRoutes = require('./users');
 
-const app = express();
+const router = express.Router();
 
-// Connect to MongoDB database
-connectDB();
+// Mount thoughts routes on /thoughts
+router.use('/thoughts', thoughtsRoutes);
 
-// ...
+// Mount reactions routes on /reactions
+router.use('/reaction', reactionsRoutes);
+
+// Mount user routes on /users
+router.use('/users', userRoutes);
+
+module.exports = router;
+
